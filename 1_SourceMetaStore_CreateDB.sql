@@ -1,6 +1,6 @@
 -- Schemas to Migrate (This is used in like to fetch the DB names to migrate)
 
-USE hive; -- Source MySQL MetaStore Schema
+USE default; -- Source MySQL MetaStore Schema
 
 set @SCHEMA_TO_MIGRATE = '%ani%';
 
