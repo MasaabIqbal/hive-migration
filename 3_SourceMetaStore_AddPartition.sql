@@ -1,8 +1,8 @@
 -- Query to create add partition scripts to run in target Hive Installation
 
-SET @SCHEMA_TO_MIGRATE = '%ani%';
-SET @oldNameNode = 'hdfs://localhost:9000/'; -- Old NameNode address
-SET @newNameNode = 'hdfs://newhostName:8020/'; -- New NameNode address
+SET @SCHEMA_TO_MIGRATE = '%default%';
+SET @oldNameNode = 'hdfs://54.201.22.32:9000/'; -- Old NameNode address
+SET @newNameNode = 'hdfs://54.201.22.32:8020/'; -- New NameNode address
 
 SELECT 
     REPLACE(add_partition_query,
@@ -11,7 +11,7 @@ SELECT
 	
 FROM			
 	(SELECT
-		CONCAT('USE ', D.name, '\; ', ' ALTER TABLE ', T.TBL_NAME, ' ADD PARTITION (', GROUP_CONCAT(PK.PKEY_NAME, '=', '\'', PKV.PART_KEY_VAL, '\''
+		CONCAT('USE ', D.NAME, '\; ', ' ALTER TABLE ', T.TBL_NAME, ' ADD PARTITION (', GROUP_CONCAT(PK.PKEY_NAME, '=', '\'', PKV.PART_KEY_VAL, '\''
                     ORDER BY PK.INTEGER_IDX), ') LOCATION \'', S.location, '\'\; ') AS add_partition_query
     FROM
         TBLS T
@@ -24,6 +24,6 @@ FROM
     WHERE
         D.name LIKE @SCHEMA_TO_MIGRATE
     GROUP BY P.PART_ID
-    ORDER BY D.name) alias1 INTO OUTFILE 'generatedSQL_target/3_ADD_PARTITION.hql';
+    ORDER BY D.name) alias1 INTO OUTFILE '/var/lib/mysql/tmp/3.hql';
     
     
