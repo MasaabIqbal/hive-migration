@@ -1,14 +1,14 @@
 source source_wrapper.properties
 
 #Hive Script Path for source Hive Installation Scripts
-outputSourcePath=$(pwd)/generatedSQL_source_Hive
-rm -rf $outputSourcePath
-mkdir -p $outputSourcePath
+outputSourcePath=/var/lib/mysql/tmp/
+sudo rm -rf $outputSourcePath
+sudo mkdir -p $outputSourcePath
 
 #Hive Script Path for target Hive Installation Scripts
-outputTargetPath=$(pwd)/generatedSQL_target_Hive
-rm -rf $outputTargetPath
-mkdir -p $outputTargetPath
+outputTargetPath=/var/lib/mysql/tmp/
+sudo rm -rf $outputTargetPath
+sudo mkdir -p $outputTargetPath
 
 # Extract Create DB statemenets from MetaStore to Run in Target Hive Installation.
 
@@ -128,9 +128,9 @@ else
 fi	
 
 # Rename schema names in CT statements
-sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/1_DBS.hql
-sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/2_CT.hql
-sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/3_ADD_PARTITION.hql
+sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/11_DBS.hql
+sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/22_CT.hql
+sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/33_ADD_PARTITION.hql
 
 
 echo "Target Hive installation scripts placed at $outputTargetPath"
