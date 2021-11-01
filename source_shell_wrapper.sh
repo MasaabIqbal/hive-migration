@@ -34,7 +34,28 @@ else
 	echo "DB Creation extraction script completed successfully"
 fi
 
-
+mysql -h$MYSQL_SERVER_HOST -u $HIVE_METASTORE_USER -p$HIVE_METASTORE_PASS -D$HIVE_METASTORE_SCHEMA --skip-column-names -e"
+set @SCHEMA_TO_MIGRATE = '$SCHEMA_TO_MIGRATE';
+SELECT 
+    CONCAT('hadoop distcp hdfs://54.201.22.32:8020//warehouse/tablespace/managed/hive/',
+            T.TBL_NAME,
+            ' hdfs://54.190.34.250:8020//warehouse/tablespace/managed/hive/',T.TBL_NAME,
+        '\;') AS SHOW_CT_STATEMENTS
+FROM
+    TBLS T
+        INNER JOIN
+    DBS D ON D.DB_ID = T.DB_ID
+WHERE
+    T.TBL_TYPE != 'INDEX_TABLE'
+        AND D.NAME LIKE @SCHEMA_TO_MIGRATE;" > $outputTargetPath/5_Distcp.sh
+ret=$?
+if [ $ret -ne 0 ];
+then
+	echo "Error - MySQL Error code is $ret while trying to extract DB creation scripts"
+	exit $ret
+else
+	echo "Migration commands extraction completed successfully"
+fi
 
 
 # Extract Show CT statemenets from MetaStore to Run in Source Hive Installation.
