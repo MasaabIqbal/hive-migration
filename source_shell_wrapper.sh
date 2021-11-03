@@ -47,7 +47,7 @@ FROM
     DBS D ON D.DB_ID = T.DB_ID
 WHERE
     T.TBL_TYPE != 'INDEX_TABLE'
-        AND D.NAME LIKE @SCHEMA_TO_MIGRATE;" > $outputTargetPath/5_Distcp.sh
+        AND D.NAME LIKE @SCHEMA_TO_MIGRATE;" > $outputTargetPath/4_Distcp.sh
 ret=$?
 if [ $ret -ne 0 ];
 then
