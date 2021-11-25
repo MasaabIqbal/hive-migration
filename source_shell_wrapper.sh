@@ -39,8 +39,7 @@ set @SCHEMA_TO_MIGRATE = '$SCHEMA_TO_MIGRATE';
 SELECT 
     CONCAT('hadoop distcp hdfs://54.201.22.32:8020//warehouse/tablespace/managed/hive/',
             T.TBL_NAME,
-            ' hdfs://54.190.34.250:8020//warehouse/tablespace/managed/hive/',T.TBL_NAME,
-        '\;') AS SHOW_CT_STATEMENTS
+            ' hdfs://54.190.34.250:8020//warehouse/tablespace/external/hive/;') AS SHOW_CT_STATEMENTS
 FROM
     TBLS T
         INNER JOIN
@@ -157,4 +156,4 @@ sed -i "s/$oldschemaname/$newschemaname/g" $outputTargetPath/3_ADD_PARTITION.hql
 echo "Target Hive installation scripts placed at $outputTargetPath"
 
 exit 0
-
+sudo chmod 777 /var/lib/mysql/tmp/*
