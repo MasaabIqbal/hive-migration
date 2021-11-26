@@ -5,8 +5,7 @@ SET @SCHEMA_TO_MIGRATE = '%default%';
 SELECT 
     CONCAT('hadoop distcp hdfs://54.201.22.32:8020//warehouse/tablespace/managed/hive/',
             T.TBL_NAME,
-            ' hdfs://54.190.34.250:8020//warehouse/tablespace/managed/hive/',T.TBL_NAME,
-        ) AS SHOW_CT_STATEMENTS
+            ' hdfs://54.190.34.250:8020//warehouse/tablespace/managed/hive/') AS SHOW_CT_STATEMENTS
 FROM
     TBLS T
         INNER JOIN
