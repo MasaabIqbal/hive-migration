@@ -1,0 +1,15 @@
+
+
+
+SELECT 
+    CONCAT('Select count(*),T."TBL_NAME"',
+            D."NAME",
+            '.',
+            T."TBL_NAME",
+            ';') AS SHOW_CT_STATEMENTS
+FROM
+    TBLS T
+    INNER JOIN
+    "DBS" D ON D."DB_ID" = T."DB_ID"
+WHERE
+    T."TBL_TYPE" != 'INDEX_TABLE';
